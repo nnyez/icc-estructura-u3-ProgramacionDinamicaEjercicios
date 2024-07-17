@@ -1,6 +1,8 @@
 package Ejercicio;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /*
@@ -20,7 +22,7 @@ import java.util.List;
  *      [2],
  *      [3],
  *      []
- *    ]
+ *    ]                 
  * 
  * El  metodo me debe devolver una lista de listas de enteros. 
  * Se puede usar varios metodos 
@@ -29,7 +31,35 @@ import java.util.List;
  */
 public class EjercicioUno {
 
-    // List<List<Integer>> subsets(List<Integer> set) {
+    public HashSet<HashSet<Integer>> subsets(List<Integer> set) {
+        HashSet<HashSet<Integer>> subSets = new HashSet<>();
+        HashSet<Integer> Sub = new HashSet<>(set);
+        getSubSet(subSets, Sub, null);
 
-    // }
+        return subSets;
+    }
+
+    private void getSubSet(HashSet<HashSet<Integer>> subSets, HashSet<Integer> set, Integer i) {
+        if (subSets.contains(set) || set.isEmpty()) {
+            return; 
+        }
+        if (i == null) {
+            for (Integer integer : set) {
+                getSubSet(subSets, set, integer);
+            }
+            subSets.add(set);
+        }
+        HashSet<Integer> subSet = new HashSet<>();
+        for (Integer integer : set) {
+            if (integer != i) {
+                subSet.add(integer);
+            }
+        }
+
+        for (Integer integer : subSet) {
+            getSubSet(subSets, subSet, integer);
+        }
+        subSets.add(subSet);
+
+    }
 }
